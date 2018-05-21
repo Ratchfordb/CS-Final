@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=Rook
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Pawn\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=thePos\ theColor
+comment1.target=Rook(java.lang.String,\ boolean)
+numComments=2
