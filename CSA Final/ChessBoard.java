@@ -16,14 +16,22 @@ public class ChessBoard
                                     {"a3","b3","c3","d3","e3","f3","g3","h3"},
                                     {"a2","b2","c2","d2","e2","f2","g2","h2"},
                                     {"a1","b1","c1","d1","e1","f1","g1","h1"}};
-
+    private boolean white = true;
+    private boolean black = false;
+    private Piece[][] board;
     /**
      * Constructor for objects of class Board
      */
     public ChessBoard()
     {
-       
+       board = new Piece[8][8];
     }
-
+    
+    //reminder that "true" is white
+    public void newGame()
+    {
+        for(int i = 0;i<0;i++)
+        {}
+    }
 
 }
