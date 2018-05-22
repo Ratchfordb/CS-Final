@@ -30,8 +30,26 @@ public class ChessBoard
     //reminder that "true" is white
     public void newGame()
     {
-        for(int i = 0;i<0;i++)
-        {}
+            board[0][0] = new Rook("a8", black);
+            board[0][7] = new Rook("h8", black);
+            board[0][1] = new Knight("b8", black);
+            board[0][6] = new Knight("g8", black);
+            board[0][2] = new Bishop("c8", black);
+            board[0][5] = new Bishop("f8", black);
+            board[0][3] = new Queen("d8", black);
+            board[0][4] = new King("e8", black);
+            for(int c = 0; c<8; c++)
+            {
+                board[0][c] = new Pawn(positions[0][c], black);
+                board[7][c] = new Pawn(positions[7][c], white);
+            }
+            board[7][0] = new Rook("a8", white);
+            board[7][1] = new Knight("b8", white);
+            board[7][6] = new Knight("g8", white);
+            board[7][2] = new Bishop("c8", white);
+            board[7][5] = new Bishop("f8", white);
+            board[7][3] = new Queen("d8", white);
+            board[7][4] = new King("e8", white);
     }
 
     public void nextMove(String pos1, String pos2)
