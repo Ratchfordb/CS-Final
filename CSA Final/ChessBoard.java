@@ -52,18 +52,182 @@ public class ChessBoard
             board[7][4] = new King("e8", white);
     }
 
-    public void nextMove(String pos1, String pos2)
+    public boolean nextMove(String pos1, String pos2)
     {
-        if(validMove(pos1, pos2) == true)
+        if(validMove(pos1, pos2))
         {
-            
+            board[getRow(pos2)][getCol(pos2)] = board[getRow(pos1)][getCol(pos1)];
+            board[getRow(pos1)][getCol(pos1)] = null;
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Method determines if the selected move is a valid move.
+     * returns a boolean, true if valid, false if invalid.
+     * 
+     * 
+     */
+    public boolean validMove(String pos1, String pos2)
+    {
+        //This if deals with if the selected piece is empty
+        if(board[getRow(pos1)][getCol(pos1)]==null)
+        {
+            return false;
+        }
+        //This if deals with if the peice is a pawn.
+        else if(board[getRow(pos1)][getCol(pos1)].getName().equals(""))
+        {
+            return pawnValidMove(pos1, pos2);
+        }
+        //This if deals with the peice being a rook
+        else if(board[getRow(pos1)][getCol(pos1)].getName().equals("R"))
+        {
+            return rookValidMove(pos1, pos2);
+        }
+        //This if deals with the peice being a knight
+        else if(board[getRow(pos1)][getCol(pos1)].getName().equals("N"))
+        {
+            return knightValidMove(pos1, pos2);
+        }
+        //This if deals with the peice being a bishop
+        else if(board[getRow(pos1)][getCol(pos1)].getName().equals("B"))
+        {
+            return bishopValidMove(pos1, pos2);
+        }
+        //This if deals with the peice being a queen
+        else if(board[getRow(pos1)][getCol(pos1)].getName().equals("Q"))
+        {
+            return queenValidMove(pos1, pos2);
+        }
+        //This if deals with the peice being a king
+        else if(board[getRow(pos1)][getCol(pos1)].getName().equals("K"))
+        {
+            return kingValidMove(pos1, pos2);
+        }
+        else
+        return false;
+    }
+    
+    public boolean pawnValidMove(String pos1,String pos2)
+    {
+        //if there is no peice, returns false
+        if(board[getRow(pos1)][getCol(pos1)]==null)
+        return false;
+        
+        Pawn temp = (Pawn) board[getRow(pos1)][getCol(pos1)];
+        //checks if peice is white or black
+        
+        if(temp.getColor()==true)
+        {
+            //checks if the pawn is within one row
+            if(getRow(pos2) == (getRow(pos1)+1))
+            {
+                //checks if there is a piece in pos2
+                if(board[getRow(pos2)][getCol(pos2)]==null)
+                {
+                    //if not, checks if they are in same collom, and if they are then the move is valid.
+                    if (getCol(pos1) == getCol(pos2))
+                        return true;
+                        //if there is no peice in front of the pawn, and they are trying to move diagonal,
+                        //then the move is invalid and returns false.
+                    else
+                        return false;
+                }
+                //There is a peice in pos2
+                else
+                {
+                    //if there is a peice and it one up and to the right/left,
+                    //then the move is valid
+                    if (getCol(pos1) == (getCol(pos2) + 1)||getCol(pos1) == (getCol(pos2) - 1))
+                    {
+                        return true;
+                    }
+                    //the peice is not diagonal, return false.
+                    else 
+                    return false;
+                }
+            }
+            //check if the pawn is at the start, in which case it can move two spaces forward
+            else if(temp.hasMoved==false)
+            {
+                return true;
+            }
+            //If the pawn has already moved, and is pos2 is two spaces away, returns false.
+            else
+            {
+                return false;
+            }
+        }
+        //the peice is black
+        else
+        {
+            //checks if the pawn is within one row
+            if(getRow(pos2) == (getRow(pos1)-1))
+            {
+                //checks if there is a piece in pos2
+                if(board[getRow(pos2)][getCol(pos2)]==null)
+                {
+                    //if not, checks if they are in same collom, and if they are then the move is valid.
+                    if (getCol(pos1) == getCol(pos2))
+                        return true;
+                        //if there is no peice in front of the pawn, and they are trying to move diagonal,
+                        //then the move is invalid and returns false.
+                    else
+                        return false;
+                }
+                //There is a peice in pos2
+                else
+                {
+                    //if there is a peice and it one up and to the right/left,
+                    //then the move is valid
+                    if (getCol(pos1) == (getCol(pos2) + 1)||getCol(pos1) == (getCol(pos2) - 1))
+                    {
+                        return true;
+                    }
+                    //the peice is not diagonal, return false.
+                    else 
+                    return false;
+                }
+            }
+            //check if the pawn is at the start, in which case it can move two spaces forward
+            else if(temp.hasMoved==false)
+            {
+                return true;
+            }
+            //If the pawn has already moved, and is pos2 is two spaces away, returns false.
+            else
+            {
+                return false;
+            }
         }
     }
     
-    public boolean validMove(String pos1, String pos2)
+    public boolean knightValidMove(String pos1,String pos2)
     {
-        boolean val = false;
-        return val;
+        Knight temp = (Knight) board[getRow(pos1)][getCol(pos1)];
+        if (
+    }
+    
+    public boolean rookValidMove(String pos1,String pos2)
+    {
+        
+    }
+    
+    public boolean bishopValidMove(String pos1,String pos2)
+    {
+        
+    }
+    
+    public boolean queenValidMove(String pos1,String pos2)
+    {
+        
+    }
+    
+    public boolean kingValidMove(String pos1,String pos2)
+    {
+        
     }
     
     /**

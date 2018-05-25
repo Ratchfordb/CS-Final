@@ -12,11 +12,14 @@ public class Pawn extends Piece
     private String name = "";
     private boolean color;
     private String pos;
-
+    public boolean hasMoved = false;
     public Pawn(String thePos, boolean theColor)
     {
         super(thePos,theColor);
         points = 1;
     }
+    
+    
+    
     
 }

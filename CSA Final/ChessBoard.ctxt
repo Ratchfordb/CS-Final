@@ -10,6 +10,7 @@ comment3.params=pos1\ pos2
 comment3.target=void\ nextMove(java.lang.String,\ java.lang.String)
 comment4.params=pos1\ pos2
 comment4.target=boolean\ validMove(java.lang.String,\ java.lang.String)
+comment4.text=\r\n\ Method\ determines\ if\ the\ selected\ move\ is\ a\ valid\ move.\r\n\ returns\ a\ boolean,\ true\ if\ valid,\ false\ if\ invalid.\r\n\ \r\n\ \r\n
 comment5.params=pos
 comment5.target=int\ getCol(java.lang.String)
 comment5.text=\r\n\ Method\ to\ return\ the\ collum\ of\ a\ position.\ \r\n\ converts\ the\ string,\ for\ example\ "a1"\ into\ 0\r\n\ \r\n\ \r\n
