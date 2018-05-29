@@ -14,7 +14,10 @@
     
     //This only works if we make it so that the kingValidMove() method can deal with
     //OOB inputs in some capacity, but that should be possible (and actually not that hard).
-    //Another thing: make sure that if the initial and final positions are the same the move is invalid
+    // **IMPORTANT**: Currently this method has no way of determining 
+    // whether or not the king is in check at all,so we need to work on that
+    //Another thing: make sure that if the initial and final positions 
+    //are the same the move is invalid (in general)
     public boolean isCheckmate()
     {
         for(int r = 0; r<8; r++)
