@@ -1,0 +1,61 @@
+    //Okay before this method works properly you will need to instantiate a variable as follows
+    // private boolean whiteToMove = true;
+    //also add to the newGame() method a step at the end that goes
+    // whiteToMove = true;
+    //also at the end of the nextMove() method, add a step as follows
+    // whiteToMove = !whiteToMove;
+    public String getTurn()
+    {
+        if(whiteToMove)
+            return "White";
+        else
+            return "Black";
+    }
+    
+    //This only works if we make it so that the kingValidMove() method can deal with
+    //OOB inputs in some capacity, but that should be possible (and actually not that hard).
+    //Another thing: make sure that if the initial and final positions are the same the move is invalid
+    public boolean isCheckmate()
+    {
+        for(int r = 0; r<8; r++)
+        {
+            for(int c = 0; c<8; c++)
+            {
+                if(whiteToMove)
+                {
+                    if(board[r][c].getName().equals("K") && board[r][c].getColor())
+                    {
+                        if(!kingValidMove(positions[r][c], positions[r-1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c+1]))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                   if(board[r][c].getName().equals("K") && !board[r][c].getColor())
+                    {
+                        if(!kingValidMove(positions[r][c], positions[r-1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c+1]))
+                        {
+                            return true;
+                        }
+                    } 
+                }
+            }
+        }
+        return false;
+    }
