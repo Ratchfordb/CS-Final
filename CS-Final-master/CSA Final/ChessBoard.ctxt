@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=ChessBoard
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Board\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=ChessBoard()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Board\r\n
+comment2.params=
+comment2.target=void\ newGame()
+comment3.params=pos1\ pos2
+comment3.target=void\ nextMove(java.lang.String,\ java.lang.String)
+comment4.params=pos1\ pos2
+comment4.target=boolean\ validMove(java.lang.String,\ java.lang.String)
+comment4.text=\r\n\ Method\ determines\ if\ the\ selected\ move\ is\ a\ valid\ move.\r\n\ returns\ a\ boolean,\ true\ if\ valid,\ false\ if\ invalid.\r\n\ \r\n\ \r\n
+comment5.params=pos
+comment5.target=int\ getCol(java.lang.String)
+comment5.text=\r\n\ Method\ to\ return\ the\ collum\ of\ a\ position.\ \r\n\ converts\ the\ string,\ for\ example\ "a1"\ into\ 0\r\n\ \r\n\ \r\n
+comment6.params=pos
+comment6.target=int\ getRow(java.lang.String)
+comment6.text=\r\n\ Method\ to\ return\ the\ row\ of\ a\ position.\ \r\n\ converts\ the\ string,\ for\ example\ "a1"\ into\ 0\r\n\ \r\n\ \r\n
+numComments=7
