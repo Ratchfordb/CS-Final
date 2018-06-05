@@ -19,6 +19,9 @@ public abstract class Piece
         color = isWhite;
     }
     
+    public void setPos(String position)
+    {    pos = position;
+    }
     public String getPos()
     {    return pos;
     }   
@@ -34,4 +37,5 @@ public abstract class Piece
     public boolean getColor()
     {   return color;   
     }
+    
 }
