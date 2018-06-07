@@ -61,6 +61,7 @@ public class ChessBoard
         {
             board[getRow(pos2)][getCol(pos2)] = board[getRow(pos1)][getCol(pos1)];
             board[getRow(pos1)][getCol(pos1)] = null;
+            board[getRow(pos2)][getCol(pos2)].setPos(pos2);
             whiteToMove = !whiteToMove;
             return true;
         }
