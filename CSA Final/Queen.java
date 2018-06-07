@@ -8,16 +8,9 @@
 public class Queen extends Piece
 {
     // instance variables - replace the example below with your own
-    private int points;
-    private String name;
-    private boolean color;
-    private String pos;
-
-    public Queen(String thePos, boolean theColor)
+    public Queen(String thePos, boolean theColor, int thePoints, String theName)
     {
-        super(thePos,theColor);
-        points = 9;
-        name = "Q";
+        super(thePos,theColor, thePoints, theName);
     }
     
 }
