@@ -18,8 +18,8 @@ public class ChessBoard
                                     {"a1","b1","c1","d1","e1","f1","g1","h1"}};
     private boolean white = true;
     private boolean black = false;
-    private boolean whiteToMove = true;
     private Piece[][] board;
+    private boolean whiteToMove = true;
     /**
      * Constructor for objects of class Board
      */
@@ -28,41 +28,30 @@ public class ChessBoard
        board = new Piece[8][8];
     }
     
-    public void retBoard(Piece[][] temp)
-    {
-        
-            for(int i = 0; i < 8; i++)
-            {
-                for(int j = 0; j < 8; j++)
-                {
-                    temp[i][j] = board[i][j];
-                }
-            }
-    }
-    
     //reminder that "true" is white
     public void newGame()
     {
-            board[0][0] = new Rook("a8", false);
-            board[0][7] = new Rook("h8", false);
-            board[0][1] = new Knight("b8", false);
-            board[0][6] = new Knight("g8", false);
-            board[0][2] = new Bishop("c8", false);
-            board[0][5] = new Bishop("f8", false);
-            board[0][3] = new Queen("d8", false);
-            board[0][4] = new King("e8", false);
+            board[0][0] = new Rook("a8", black, 5, "R");
+            board[0][7] = new Rook("h8", black, 5, "R");
+            board[0][1] = new Knight("b8", black, 3, "N");
+            board[0][6] = new Knight("g8", black, 3, "N");
+            board[0][2] = new Bishop("c8", black, 3, "B");
+            board[0][5] = new Bishop("f8", black, 3, "B");
+            board[0][3] = new Queen("d8", black, 9, "Q");
+            board[0][4] = new King("e8", black, 0, "K");
             for(int c = 0; c<8; c++)
             {
-                board[1][c] = new Pawn(positions[1][c], false);
-                board[6][c] = new Pawn(positions[6][c], true);
+                board[1][c] = new Pawn(positions[1][c], black, 1, "");
+                board[6][c] = new Pawn(positions[6][c], white, 1, "");
             }
-            board[7][0] = new Rook("a8", true);
-            board[7][1] = new Knight("b8", true);
-            board[7][6] = new Knight("g8", true);
-            board[7][2] = new Bishop("c8", true);
-            board[7][5] = new Bishop("f8", true);
-            board[7][3] = new Queen("d8", true);
-            board[7][4] = new King("e8", true);
+            board[7][0] = new Rook("a1", white, 5, "R");
+            board[7][7] = new Rook("h1", white, 5, "R");
+            board[7][1] = new Knight("b1", white, 3, "N");
+            board[7][6] = new Knight("g1", white, 3, "N");
+            board[7][2] = new Bishop("c1", white, 3, "B");
+            board[7][5] = new Bishop("f1", white, 3, "B");
+            board[7][3] = new Queen("d1", white, 9, "Q");
+            board[7][4] = new King("e1", white, 0, "K");
             whiteToMove = true;
     }
 
@@ -72,6 +61,7 @@ public class ChessBoard
         {
             board[getRow(pos2)][getCol(pos2)] = board[getRow(pos1)][getCol(pos1)];
             board[getRow(pos1)][getCol(pos1)] = null;
+            board[getRow(pos2)][getCol(pos2)].setPos(pos2);
             whiteToMove = !whiteToMove;
             return true;
         }
@@ -86,21 +76,17 @@ public class ChessBoard
      */
     public boolean validMove(String pos1, String pos2)
     {
-        //if they choose the same tile
-        if(pos1.equals(pos2))
-        return false;
-        
-        if(board[getRow(pos1)][getCol(pos1)].getColor() == board[getRow(pos2)][getCol(pos2)].getColor())
-        return false;
-        
-        
         //This if deals with if the selected piece is empty
         if(board[getRow(pos1)][getCol(pos1)]==null)
         {
             return false;
         }
+        else if(whiteToMove != board[getRow(pos1)][getCol(pos1)].getColor())
+        {
+            return false;
+        }
         //This if deals with if the peice is a pawn.
-        else if(board[getRow(pos1)][getCol(pos1)].getName()==null)
+        else if(board[getRow(pos1)][getCol(pos1)].getName().equals(""))
         {
             return pawnValidMove(pos1, pos2);
         }
@@ -130,19 +116,15 @@ public class ChessBoard
             return kingValidMove(pos1, pos2);
         }
         else
-        return false;
+        {
+            return false;
+        }
     }
     
     public boolean pawnValidMove(String pos1,String pos2)
     {
-        //if there is no peice, returns false
-        if(board[getRow(pos1)][getCol(pos1)]==null)
-        return false;
-        
-        Pawn temp = (Pawn) board[getRow(pos1)][getCol(pos1)];
         //checks if peice is white or black
-        
-        if(temp.getColor()==true)
+        if(board[getRow(pos1)][getCol(pos1)].getColor()==true)
         {
             //checks if the pawn is within one row
             if(getRow(pos2) == (getRow(pos1)-1))
@@ -155,26 +137,29 @@ public class ChessBoard
                         return true;
                         //if there is no peice in front of the pawn, and they are trying to move diagonal,
                         //then the move is invalid and returns false.
-                    else
+                    else{
+                        System.out.println("fail3");
                         return false;
+                    }
                 }
                 //There is a peice in pos2
                 else
                 {
                     //if there is a peice and it one up and to the right/left,
                     //then the move is valid
-                    
                     if (getCol(pos1) == (getCol(pos2) + 1)||getCol(pos1) == (getCol(pos2) - 1))
                     {
                         return true;
                     }
                     //the peice is not diagonal, return false.
-                    else 
-                    return false;
+                    else {
+                        System.out.println("fail4");
+                        return false;
+                    }
                 }
             }
             //check if the pawn is at the start, in which case it can move two spaces forward
-            else if(temp.hasMoved==false)
+            else if(getRow(pos1) == 6 && getRow(pos2) == 4 && board[5][getCol(pos1)]==null)
             {
                 return true;
             }
@@ -199,7 +184,10 @@ public class ChessBoard
                         //if there is no peice in front of the pawn, and they are trying to move diagonal,
                         //then the move is invalid and returns false.
                     else
+                    {
+                        System.out.println("fail6");
                         return false;
+                    }
                 }
                 //There is a peice in pos2
                 else
@@ -212,17 +200,20 @@ public class ChessBoard
                     }
                     //the peice is not diagonal, return false.
                     else 
+                    {
                     return false;
+                }
                 }
             }
             //check if the pawn is at the start, in which case it can move two spaces forward
-            else if(temp.hasMoved==false)
+            else if(getRow(pos1) == 1 && getRow(pos2) == 3 && board[2][getCol(pos1)]==null)
             {
                 return true;
             }
             //If the pawn has already moved, and is pos2 is two spaces away, returns false.
             else
             {
+                System.out.println("fail8");
                 return false;
             }
         }
@@ -232,34 +223,33 @@ public class ChessBoard
     {
         if (getCol(pos1)==getCol(pos2)+1)
         {
-            if((getRow(pos1)==getCol(pos2)+2)||getRow(pos1)==(getCol(pos2)-2))
+            if((getRow(pos1)==getRow(pos2)+2)||getRow(pos1)==(getRow(pos2)-2))
             {
                 return true;
             }
         }
         else if (getCol(pos1)==getCol(pos2)-1)
         {
-            if((getRow(pos1)==getCol(pos2)+2)||getRow(pos1)==(getCol(pos2)-2))
+            if((getRow(pos1)==getRow(pos2)+2)||getRow(pos1)==(getRow(pos2)-2))
             {
                 return true;
             }
         }
         else if (getCol(pos1)==getCol(pos2)+2)
         {
-            if((getRow(pos1)==getCol(pos2)+1)||getRow(pos1)==(getCol(pos2)-1))
+            if((getRow(pos1)==getRow(pos2)+1)||getRow(pos1)==(getRow(pos2)-1))
             {
                 return true;
             }
         }
         else if (getCol(pos1)==getCol(pos2)-2)
         {
-            if((getRow(pos1)==getCol(pos2)+1)||getRow(pos1)==(getCol(pos2)-1))
+            if((getRow(pos1)==getRow(pos2)+1)||getRow(pos1)==(getRow(pos2)-1))
             {
                 return true;
             }
         }
         return false;
-        
     }
     
     public boolean rookValidMove(String pos1,String pos2)
@@ -387,127 +377,12 @@ public class ChessBoard
     
     public boolean queenValidMove(String pos1,String pos2)
     {
-        
-        
-        
-        if(getCol(pos1) == getCol(pos2))
-        {
-            if(getRow(pos1) > getRow(pos2))
-            {
-                for(int i = 0; i < getRow(pos1)-getRow(pos2); i++)
-                {
-                    if(board[getCol(pos1)][getRow(pos1)-i]!=null)
-                    return false;
-                }
-            }
-            else if(getRow(pos1) < getRow(pos2))
-            {
-                
-                for(int i = 0; i < getRow(pos2)-getRow(pos1); i++)
-                {
-                    if(board[getCol(pos1)][getRow(pos1)+i]!=null)
-                    return false;
-                }
-            }
-            return true;
-        }
-        else if(getRow(pos1) == getRow(pos2))
-        {
-            if(getCol(pos1) > getCol(pos2))
-            {
-                for(int i = 0; i < getCol(pos1)-getCol(pos2); i++)
-                {
-                    if(board[getCol(pos1)-i][getRow(pos1)]!=null)
-                    return false;
-                }
-            }
-            else if(getCol(pos1) < getCol(pos2))
-            {
-                
-                for(int i = 0; i < getCol(pos2)-getCol(pos1); i++)
-                {
-                    if(board[getCol(pos1)+i][getRow(pos1)]!=null)
-                    return false;
-                }
-            }
-        }
-        
-        
-        
-        
-        String [] validPos = new String[13];
-        int i = 0;
-        //when pos2 is to the right of pos1
-        if(getCol(pos1)<getCol(pos2))
-        {
-            //pos2 is above
-            if(getRow(pos1)>getRow(pos2))
-            {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
-                while(x <= 7 && y >= 0 && (board[y][x] == null || board[y][x].getColor() != board[getRow(pos1)][getCol(pos1)].getColor()))
-                {
-                    validPos[i] = positions[y][x];
-                    i++;
-                    y--;
-                    x++;
-                }
-            }
-            //pos2 is below
-            if(getRow(pos1)<getRow(pos2))
-            {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
-                while(x <= 7 && y <= 7 && (board[y][x] == null || board[y][x].getColor() != board[getRow(pos1)][getCol(pos1)].getColor()))
-                {
-                    validPos[i] = positions[y][x];
-                    i++;
-                    y++;
-                    x++;
-                }
-            }
-        }
-        //when pos2 is to the left of pos1
-        else
-        {
-            //pos2 is above
-            if(getRow(pos1)>getRow(pos2))
-            {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
-                while(x >= 0 && y >= 0 && (board[y][x] == null || board[y][x].getColor() != board[getRow(pos1)][getCol(pos1)].getColor()))
-                {
-                    validPos[i] = positions[y][x];
-                    i++;
-                    y--;
-                    x--;
-                }
-            }
-            //pos2 is below
-            if(getRow(pos1)<getRow(pos2))
-            {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
-                while(x >= 0 && y <= 7 && (board[y][x] == null || board[y][x].getColor() != board[getRow(pos1)][getCol(pos1)].getColor()))
-                {
-                    validPos[i] = positions[y][x];
-                    i++;
-                    y++;
-                    x--;
-                }
-            }
-        }
-        for(int j = 0; i < validPos.length; i++)
-        {
-            if (validPos[j] == pos2)
-            return true;
-        }
-        return false;
+        return bishopValidMove(pos1, pos2) || rookValidMove(pos1, pos2);
     }
     
     public boolean kingValidMove(String pos1,String pos2)
     {
-        return false;
+        return true;
     }
     
     /**
@@ -519,9 +394,9 @@ public class ChessBoard
     public int getCol(String pos)
     {
         int val = -1;
-        for(int i = 0; i < 8; i++)
+        for(int i = 0; i < board.length; i++)
         {
-            for(int j = 0; j < 8; j++)
+            for(int j = 0; j < board.length; j++)
             {
                if (positions[j][i].equals(pos))
                {
@@ -541,9 +416,9 @@ public class ChessBoard
     public int getRow(String pos)
     {
         int val = -1;
-        for(int i = 0; i < 8; i++)
+        for(int i = 0; i < board.length; i++)
         {
-            for(int j = 0; j < 8; j++)
+            for(int j = 0; j < board.length; j++)
             {
                if (positions[i][j].equals(pos))
                {
@@ -553,7 +428,8 @@ public class ChessBoard
         }
         return val;
     }
-        //Okay before this method works properly you will need to instantiate a variable as follows
+    
+    //Okay before this method works properly you will need to instantiate a variable as follows
     // private boolean whiteToMove = true;
     //also add to the newGame() method a step at the end that goes
     // whiteToMove = true;
@@ -569,10 +445,6 @@ public class ChessBoard
     
     //This only works if we make it so that the kingValidMove() method can deal with
     //OOB inputs in some capacity, but that should be possible (and actually not that hard).
-    // **IMPORTANT**: Currently this method has no way of determining 
-    // whether or not the king is in check at all,so we need to work on that
-    //Another thing: make sure that if the initial and final positions 
-    //are the same the move is invalid (in general)
     public boolean isCheckmate()
     {
         for(int r = 0; r<8; r++)
@@ -581,8 +453,55 @@ public class ChessBoard
             {
                 if(whiteToMove)
                 {
-                    if(board[r][c].getName().equals("K") && board[r][c].getColor())
+                    if(board[r][c]!= null && board[r][c].getName().equals("K") && board[r][c].getColor() && inCheck(positions[r][c]))
                     {
+                        if(r == 0)
+                        {
+                            if(
+                            !kingValidMove(positions[r][c], positions[r][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r][c+1])
+                            &&!kingValidMove(positions[r][c], positions[r+1][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r+1][c])
+                            &&!kingValidMove(positions[r][c], positions[r+1][c+1]))
+                            {
+                            return true;
+                        }
+                    }
+                        else if(r == 7)
+                        {
+                            if(!kingValidMove(positions[r][c], positions[r-1][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r-1][c])
+                            &&!kingValidMove(positions[r][c], positions[r-1][c+1])
+                            &&!kingValidMove(positions[r][c], positions[r][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r][c+1]))
+                            {
+                            return true;
+                        }
+                        }
+                        else if(c == 0)
+                        {
+                        if(!kingValidMove(positions[r][c], positions[r-1][c])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c+1]))
+                        {
+                            return true;
+                        }
+                        }
+                        else if(c == 7)
+                        {
+                        if(!kingValidMove(positions[r][c], positions[r-1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c])
+                        &&!kingValidMove(positions[r][c], positions[r][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c]))
+                        {
+                            return true;
+                        }
+                        }
+                        else
+                        {
                         if(!kingValidMove(positions[r][c], positions[r-1][c-1])
                         &&!kingValidMove(positions[r][c], positions[r-1][c])
                         &&!kingValidMove(positions[r][c], positions[r-1][c+1])
@@ -594,12 +513,61 @@ public class ChessBoard
                         {
                             return true;
                         }
+                       }
+                        
                     }
                 }
                 else
                 {
-                   if(board[r][c].getName().equals("K") && !board[r][c].getColor())
-                    {
+                   if(board[r][c]!= null && board[r][c].getName().equals("K") && !board[r][c].getColor() && inCheck(positions[r][c]))
+                   {
+                       if(r == 0)
+                       {
+                            if(
+                            !kingValidMove(positions[r][c], positions[r][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r][c+1])
+                            &&!kingValidMove(positions[r][c], positions[r+1][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r+1][c])
+                            &&!kingValidMove(positions[r][c], positions[r+1][c+1]))
+                            {
+                            return true;
+                        }
+                       }
+                       else if(r == 7)
+                       {
+                            if(!kingValidMove(positions[r][c], positions[r-1][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r-1][c])
+                            &&!kingValidMove(positions[r][c], positions[r-1][c+1])
+                            &&!kingValidMove(positions[r][c], positions[r][c-1])
+                            &&!kingValidMove(positions[r][c], positions[r][c+1]))
+                            {
+                            return true;
+                        }
+                       }
+                       else if(c == 0)
+                       {
+                        if(!kingValidMove(positions[r][c], positions[r-1][c])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r][c+1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c+1]))
+                        {
+                            return true;
+                        }
+                        }
+                        else if(c == 7)
+                        {
+                        if(!kingValidMove(positions[r][c], positions[r-1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r-1][c])
+                        &&!kingValidMove(positions[r][c], positions[r][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c-1])
+                        &&!kingValidMove(positions[r][c], positions[r+1][c]))
+                        {
+                            return true;
+                        }
+                        }
+                        else
+                        {
                         if(!kingValidMove(positions[r][c], positions[r-1][c-1])
                         &&!kingValidMove(positions[r][c], positions[r-1][c])
                         &&!kingValidMove(positions[r][c], positions[r-1][c+1])
@@ -611,6 +579,7 @@ public class ChessBoard
                         {
                             return true;
                         }
+                       }
                     } 
                 }
             }

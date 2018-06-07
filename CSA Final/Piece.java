@@ -8,26 +8,30 @@
 public abstract class Piece
 {
     // instance variables - replace the example below with your own
-    private int points;
     private String name;
     private boolean color;
     private String pos;
+    private int points;
 
-    public Piece(String thePos, boolean isWhite)
+    public Piece(String thePos, boolean isWhite, int thePoints, String theName)
     {
         pos = thePos;
         color = isWhite;
+        points = thePoints;
+        name = theName;
     }
     
     public void setPos(String position)
-    {    pos = position;
+    {   pos = position;
     }
+    
     public String getPos()
     {    return pos;
     }   
     
     public int getPoints()
-    {   return points;
+    {
+        return points;
     }
     
     public String getName()
@@ -37,5 +41,4 @@ public abstract class Piece
     public boolean getColor()
     {   return color;   
     }
-    
 }
