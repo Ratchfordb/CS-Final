@@ -10,7 +10,7 @@ public class ChessGame
         ChessBoard board = new ChessBoard();
         while(!input.equals("QUIT") && !input2.equals("QUIT"))
         {   
-            if(input.equals("NEW"))
+            if(input.toUpperCase().equals("NEW"))
             {
                 board.newGame();
                 System.out.println("Enter the position of the piece you want to move.");
