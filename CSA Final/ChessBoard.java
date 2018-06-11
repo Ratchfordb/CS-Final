@@ -313,8 +313,8 @@ public class ChessBoard
             //pos2 is above
             if(getRow(pos1)>getRow(pos2))
             {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
+                int y = getRow(pos1) -1;
+                int x = getCol(pos1) +1;
                 while(x <= 7 && y >= 0 && board[y][x] == null)
                 {
                     validPos[i] = positions[y][x];
@@ -322,18 +322,28 @@ public class ChessBoard
                     y--;
                     x++;
                 }
+                if(x <= 7 && y >= 0 && board[y][x].getColor() != whiteToMove)
+                {
+                    
+                    validPos[i] = positions[y][x];
+                }
             }
             //pos2 is below
             if(getRow(pos1)<getRow(pos2))
             {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
+                int y = getRow(pos1) +1 ;
+                int x = getCol(pos1) +1;
                 while(x <= 7 && y <= 7 && board[y][x] == null)
                 {
                     validPos[i] = positions[y][x];
                     i++;
                     y++;
                     x++;
+                }
+                if(x <= 7 && y <= 7 && board[y][x].getColor() != whiteToMove)
+                {
+                    
+                    validPos[i] = positions[y][x];
                 }
             }
         }
@@ -343,21 +353,26 @@ public class ChessBoard
             //pos2 is above
             if(getRow(pos1)>getRow(pos2))
             {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
+                int y = getRow(pos1) - 1;
+                int x = getCol(pos1) - 1 ;
                 while(x >= 0 && y >= 0 && board[y][x] == null)
                 {
                     validPos[i] = positions[y][x];
-                    i++;
                     y--;
                     x--;
+                    i++;
+                }
+                if(x >= 0 && y >= 0 && board[y][x].getColor() != whiteToMove)
+                {
+                    
+                    validPos[i] = positions[y][x];
                 }
             }
             //pos2 is below
             if(getRow(pos1)<getRow(pos2))
             {
-                int y = getRow(pos1);
-                int x = getCol(pos1);
+                int y = getRow(pos1) +1;
+                int x = getCol(pos1) -1;
                 while(x >= 0 && y <= 7 && board[y][x] == null)
                 {
                     validPos[i] = positions[y][x];
@@ -365,11 +380,16 @@ public class ChessBoard
                     y++;
                     x--;
                 }
+                if(x >= 0 && y <= 7 && board[y][x].getColor() != whiteToMove)
+                {
+                    
+                    validPos[i] = positions[y][x];
+                }
             }
         }
-        for(int j = 0; i < validPos.length; i++)
+        for(int j = 0; j < validPos.length; j++)
         {
-            if (validPos[j] == pos2)
+            if (validPos[j] != null && validPos[j].equals(pos2))
             return true;
         }
         return false;
